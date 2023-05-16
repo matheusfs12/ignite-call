@@ -17,7 +17,8 @@ export function buildNextAuthOptions(req: NextApiRequest, res: NextApiResponse):
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
                 authorization: {
                     params: {
-                        scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile  https://www.googleapis.com/auth/calendar'
+                        scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile  https://www.googleapis.com/auth/calendar',
+                        access_type: 'offline'
                     }
                 },
                 profile(profile: GoogleProfile) {
@@ -39,6 +40,13 @@ export function buildNextAuthOptions(req: NextApiRequest, res: NextApiResponse):
                 }
 
                 return true;
+            },
+
+            async session({ session, user }) {
+                return {
+                    ...session,
+                    user
+                };
             }
         }
     };
