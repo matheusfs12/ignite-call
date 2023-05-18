@@ -15,6 +15,7 @@ import { ArrowRight } from 'phosphor-react';
 import { api } from '@/lib/axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
 
 const timeIntervalsFormSchema = z.object({
     intervals: z
@@ -83,6 +84,8 @@ export default function TimeIntervals() {
         }
     });
 
+    const router = useRouter();
+
     const { fields } = useFieldArray({
         control,
         name: 'intervals'
@@ -92,6 +95,8 @@ export default function TimeIntervals() {
 
     async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
         await api.post('/users/time-intervals', { intervals: data.intervals });
+
+        await router.push('/register/update-profile');
     }
 
     return (

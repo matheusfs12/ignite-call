@@ -1,10 +1,13 @@
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse, NextPageContext } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 
 import { PrismaAdapter } from '@/lib/auth/prisma-adapter';
 
-export function buildNextAuthOptions(req: NextApiRequest, res: NextApiResponse): NextAuthOptions {
+export function buildNextAuthOptions(
+    req: NextApiRequest | NextPageContext['req'],
+    res: NextApiResponse | NextPageContext['res']
+): NextAuthOptions {
     if (!process.env.GOOGLE_CLIENT_ID) throw new Error('Missing GOOGLE_CLIENT_ID env var');
     if (!process.env.GOOGLE_CLIENT_SECRET) throw new Error('Missing GOOGLE_CLIENT_SECRET env var');
 
