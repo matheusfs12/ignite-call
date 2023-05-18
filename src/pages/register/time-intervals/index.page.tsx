@@ -12,6 +12,7 @@ import {
 import { convertTimeStringToMinutes, getWeekDayLong } from '@/utils/datetime-formatters';
 
 import { ArrowRight } from 'phosphor-react';
+import { api } from '@/lib/axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -90,7 +91,7 @@ export default function TimeIntervals() {
     const intervals = watch('intervals');
 
     async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
-        console.log(data);
+        await api.post('/users/time-intervals', { intervals: data.intervals });
     }
 
     return (
