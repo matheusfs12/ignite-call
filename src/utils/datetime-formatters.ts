@@ -1,3 +1,11 @@
+export function getShortWeekDays() {
+    const formatter = new Intl.DateTimeFormat('pt-BR', { weekday: 'long' });
+
+    return Array.from(Array(7).keys())
+        .map((day) => formatter.format(new Date(0, 0, day)))
+        .map((weekDay) => weekDay.substring(0, 3).toUpperCase());
+}
+
 export function getWeekDayLong(day: number) {
     const weekDayLong = new Date(0, 0, day).toLocaleString('pt-BR', { weekday: 'long' });
 
